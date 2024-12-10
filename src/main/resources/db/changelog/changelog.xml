@@ -6,4 +6,7 @@
 
     <include file="changes/2024-10-11-19-30-00-create-table-authors.sql" relativeToChangelogFile="true"/>
     <include file="changes/2024-10-11-19-01-00-create-table-blogs.sql" relativeToChangelogFile="true"/>
+    <include file="changes/2024-12-09-16-17-00-create-table-comments.sql" relativeToChangelogFile="true"/>
+    <include file="changes/2024-12-09-16-17-00-create-table-tags.sql" relativeToChangelogFile="true"/>
+    <include file="changes/2024-12-09-23-18-00-create-relations-tags-blogs.sql" relativeToChangelogFile="true"/>
 </databaseChangeLog>

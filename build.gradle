@@ -27,10 +27,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.liquibase:liquibase-core'
+    implementation 'org.liquibase:liquibase-core:4.23.0'
 
     compileOnly 'org.projectlombok:lombok'
-    runtimeOnly 'org.postgresql:postgresql'
+    runtimeOnly 'org.postgresql:postgresql:42.5.1'
     annotationProcessor 'org.projectlombok:lombok'
     //библиотеку mapstruct пишем только после библеотеки lombok так как она от нее зависима
     implementation 'org.mapstruct:mapstruct:1.6.2'

@@ -4,10 +4,12 @@ import iitu.newsmanagement.newsmanagement.dto.BlogDto;
 import iitu.newsmanagement.newsmanagement.dto.CreateBlogDto;
 import iitu.newsmanagement.newsmanagement.entity.Author;
 import iitu.newsmanagement.newsmanagement.entity.Blog;
+import iitu.newsmanagement.newsmanagement.exception.ResourceNotFoundException;
 import iitu.newsmanagement.newsmanagement.mapper.BlogMapper;
 import iitu.newsmanagement.newsmanagement.repository.BlogRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -59,5 +61,35 @@ public class BlogService {
 
     public void deleteBlog(Integer id) {
         blogRepository.deleteById(id);
+    }
+
+
+    //searching
+    public List<BlogDto> searchBlogs(String query) {
+        log.info("Searching for blogs with query {}", query);
+        List<Blog> blogs = blogRepository.searchBlogs(query);
+        List<BlogDto> blogDtoList = new ArrayList<>();
+        for (Blog blog : blogs) {
+            BlogDto blogDto = BlogMapper.INSTANCE.blogToBlogDto(blog);
+            blogDtoList.add(blogDto);
+        }
+        return blogDtoList;
+    }
+
+    public Author getAuthorByBlogId(Integer blogId) {
+        Blog blog = blogRepository.findById(blogId)
+                .orElseThrow(() -> new ResourceNotFoundException("Blog not found with ID: " + blogId));
+        return blog.getAuthor();
+    }
+
+    //Sorting by created/updated
+    public List<Blog> getBlogsSorted(String sortBy, String direction) {
+        log.info("Fetching blogs sorted by {} in {} order.", sortBy, direction);
+
+        Sort sort = direction.equalsIgnoreCase("desc")
+                ? Sort.by(sortBy).descending()
+                : Sort.by(sortBy).ascending();
+
+        return blogRepository.findAll(sort);
     }
 }
